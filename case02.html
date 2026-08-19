@@ -1,1 +1,920 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานการวิเคราะห์ข้อกฎหมายและแนวทางการไกล่เกลี่ยข้อพิพาท: กรณีข้าราชการครูเกษียณอายุราชการ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: K2D -->
+    <link href="https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['K2D', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            900: '#1e1b4b',
+                            800: '#312e81',
+                            700: '#4338ca',
+                            600: '#4f46e5',
+                            50: '#f0f3ff'
+                        },
+                        teal: {
+                            800: '#115e59',
+                            600: '#0d9488',
+                            500: '#14b8a6',
+                            50: '#f0fdfa'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            50: '#fffbeb'
+                        },
+                        rose: {
+                            600: '#e11d48',
+                            50: '#fff1f2'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<!-- Palette: Indigo & Teal Modern Professional (Primary: #312E81, Secondary: #0D9488, Accent: #F59E0B, Surface: #F8FAFC) -->
+<!-- Narrative Plan: 
+     1. Executive Dashboard & Hero Header.
+     2. Section 1: Fact Synthesis & Evidentiary Evaluation (Timeline & Document Legal Status).
+     3. Section 2: Legal Analysis on Salary & Pension Attachment (CPC Sec 302(2), MOE Regulations, Penal Code Sec 157).
+     4. Section 3: Mediation Jurisdiction under Dispute Mediation Act B.E. 2562.
+     5. Section 4: Interest-Based Negotiation (BATNA/WATNA) & Stakeholder Priorities.
+     6. Section 5: Ranked 5 Mediation Options & Strategic Roadmap.
+     7. Section 6: Legal Document Templates (Settlement Agreement, Assignment of Claims, Bank Debit Authorization).
+     8. Section 7: Legal Integrity Checklist & Risk Evaluation Matrix.
+     9. Section 8: Master Summary Table & Next Steps.
+-->
+<!-- Visualization Selection:
+     1. Asset Attachment Feasibility -> Compare -> Horizontal Bar Chart (Chart.js) -> Compares legal attachment feasibility across 5 asset types.
+     2. Debtor Cash Flow Restructuring -> Change/Composition -> Stacked Bar Chart (Chart.js) -> Compares net income before & after MOE Debt Station intervention.
+     3. Mediation Strategy Options Matrix -> Organize/Rank -> Bar Chart (Chart.js) -> Compares Feasibility Score vs Risk Rating for 5 options.
+     4. Stakeholder Priorities Alignment -> Relationships -> Radar Chart (Chart.js) -> Analyzes alignment of priorities among Debtor, Creditor, and Agency.
+-->
+<!-- Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+<body class="bg-slate-50 text-slate-800 font-sans antialiased leading-relaxed">
 
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-indigo-900 text-white shadow-lg border-b border-indigo-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">⚖️</span>
+                    <span class="font-bold text-lg tracking-wide text-amber-400">ศูนย์ไกล่เกลี่ยข้อพิพาท พ.ศ. 2562</span>
+                </div>
+                <div class="hidden md:flex space-x-4 text-xs font-medium">
+                    <a href="#facts" class="hover:text-amber-300 transition">1. สรุปข้อเท็จจริง</a>
+                    <a href="#legal" class="hover:text-amber-300 transition">2. วิเคราะห์การอายัดเงิน</a>
+                    <a href="#jurisdiction" class="hover:text-amber-300 transition">3. อำนาจตาม พ.ร.บ.</a>
+                    <a href="#negotiation" class="hover:text-amber-300 transition">4. BATNA & ผลประโยชน์</a>
+                    <a href="#options" class="hover:text-amber-300 transition">5. 5 ทางเลือกไกล่เกลี่ย</a>
+                    <a href="#templates" class="hover:text-amber-300 transition">6. ร่างเอกสาร</a>
+                    <a href="#risk-summary" class="hover:text-amber-300 transition">7. ความเสี่ยง & สรุป</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Title Header -->
+    <header class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-teal-800 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div class="max-w-7xl mx-auto">
+            <div class="inline-block bg-teal-500/20 text-teal-200 text-xs px-3 py-1 rounded-full uppercase font-semibold mb-3 border border-teal-400/30">
+                รายงานการวิเคราะห์และไกล่เกลี่ยข้อพิพาทเชิงลึก
+            </div>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-4 text-white">
+                การวิเคราะห์ข้อกฎหมายและแนวทางการไกล่เกลี่ยข้อพิพาทหนี้สินครูเกษียณ
+            </h1>
+            <p class="text-slate-200 text-sm sm:text-base max-w-4xl leading-relaxed">
+                กรณีข้าราชการครูจะเกษียณอายุราชการมีภาระหนี้สินผูกพันกับเพื่อนครู (ผู้ค้ำประกันซึ่งรับช่วงสิทธิเป็นเจ้าหนี้) พร้อมข้อร้องขอให้อายัดเงินบำนาญและสิทธิประโยชน์ทางการเงิน ดำเนินการภายใต้พระราชบัญญัติการไกล่เกลี่ยข้อพิพาท พ.ศ. 2562
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-indigo-700/50">
+                <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <span class="block text-xs text-slate-300">สถานะข้อพิพาท</span>
+                    <span class="text-sm sm:text-base font-semibold text-amber-300">ทางแพ่ง (สัญญากู้ยืม)</span>
+                </div>
+                <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <span class="block text-xs text-slate-300">ทุนทรัพย์</span>
+                    <span class="text-sm sm:text-base font-semibold text-teal-300">เข้าเกณฑ์ พ.ร.บ. 2562</span>
+                </div>
+                <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <span class="block text-xs text-slate-300">การอายัดบำนาญ</span>
+                    <span class="text-sm sm:text-base font-semibold text-rose-300">ต้องห้ามตามกฎหมาย</span>
+                </div>
+                <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <span class="block text-xs text-slate-300">ทางออกที่ดีที่สุด</span>
+                    <span class="text-sm sm:text-base font-semibold text-emerald-300">สัญญาประนีประนอม</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <!-- SECTION 1: สรุปข้อเท็จจริง -->
+        <section id="facts" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">📌</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">1. การสรุปข้อเท็จจริงและลำดับเหตุการณ์ (Fact Synthesis)</h2>
+                    <p class="text-xs text-slate-500">การประเมินข้อเท็จจริงที่รับฟังได้ ข้อโต้แย้ง และสถานะพยานหลักฐานทางกฎหมาย</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                การไกล่เกลี่ยข้อพิพาทที่มีประสิทธิภาพต้องเริ่มต้นจากการคัดแยกข้อเท็จจริงอย่างเป็นระบบ เพื่อให้คู่กรณีเห็นภาพรวมของลำดับเหตุการณ์และสถานะพยานหลักฐานที่แท้จริง โดยคดีนี้มีจุดเริ่มต้นจากการค้ำประกันหนี้สถาบันการเงิน จนนำไปสู่การกู้ยืมเงินปิดหนี้แทนกันและการจัดทำหนังสือสัญญาฉบับใหม่
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Timeline & Facts -->
+                <div class="space-y-4">
+                    <h3 class="font-semibold text-indigo-800 text-sm flex items-center space-x-2">
+                        <span>🕒</span>
+                        <span>ลำดับเหตุการณ์และข้อเท็จจริงที่รับฟังได้</span>
+                    </h3>
+                    <div class="relative pl-6 border-l-2 border-indigo-200 space-y-4 text-xs">
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></div>
+                            <span class="font-bold text-indigo-900">เหตุการณ์ที่ 1:</span> ครูผู้เกษียณ (ลูกหนี้) กู้เงินธนาคารออมสิน โดยมีเพื่อนครูเป็นผู้ค้ำประกัน
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></div>
+                            <span class="font-bold text-indigo-900">เหตุการณ์ที่ 2:</span> ลูกหนี้ผิดนัด ธนาคารฟ้องร้อง ส่งผลกระทบถึงเพื่อนครูผู้ค้ำประกัน
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-teal-600 border-2 border-white"></div>
+                            <span class="font-bold text-teal-800">เหตุการณ์ที่ 3:</span> เพื่อนครูแก้ปัญหาโดยกู้เงินออมสินมาปิดหนี้แทน เพื่อป้องกันความเสียหายของตนเอง (เกิดสิทธิรับช่วงสิทธิ)
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                            <span class="font-bold text-amber-800">เหตุการณ์ที่ 4:</span> ทั้งสองฝ่ายทำ "หนังสือสัญญาเงินกู้" ฉบับใหม่ แต่ขาดลายมือชื่อพยาน และไม่ได้ปิดอากรแสตมป์
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-rose-600 border-2 border-white"></div>
+                            <span class="font-bold text-rose-800">เหตุการณ์ปัจจุบัน:</span> ครูลูกหนี้กำลังจะเกษียณอายุราชการ เจ้าหนี้ขอไกล่เกลี่ยและเรียกร้องให้ต้นสังกัดอายัดเงินบำนาญ/สิทธิประโยชน์
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal Evidence Analysis -->
+                <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-3">
+                    <h3 class="font-semibold text-slate-800 text-sm flex items-center space-x-2">
+                        <span>🔍</span>
+                        <span>วิเคราะห์สถานะความสมบูรณ์ของเอกสารสัญญา</span>
+                    </h3>
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3 bg-white rounded border border-slate-200">
+                            <div class="font-bold text-indigo-900 mb-1">1. การขาดพยานบุคคลในสัญญาเงินกู้</div>
+                            <p class="text-slate-600">
+                                <strong class="text-emerald-700">สัญญายังคงมีผลสมบูรณ์:</strong> ตาม ป.พ.พ. มาตรา 653 วรรคหนึ่ง การกู้ยืมเงินกว่า 2,000 บาทขึ้นไป บังคับให้มีหลักฐานเป็นหนังสือลงลายมือชื่อผู้กู้เท่านั้น การขาดพยานลงนามไม่ทำให้สัญญาตกเป็นโมฆะ เว้นแต่ใช้ลายนิ้วมือซึ่งต้องมีพยาน 2 คนตามมาตรา 9
+                            </p>
+                        </div>
+                        <div class="p-3 bg-white rounded border border-slate-200">
+                            <div class="font-bold text-indigo-900 mb-1">2. การไม่ปิดอากรแสตมป์บริบูรณ์</div>
+                            <p class="text-slate-600">
+                                <strong class="text-amber-700">ไม่ทำให้สัญญาเป็นโมฆะ แต่ใช้รับฟังในศาลไม่ได้ทันที:</strong> ตาม ป.รัษฎากร มาตรา 118 สัญญาที่ไม่ปิดอากรแสตมป์ (1 บาท ต่อเงินกู้ 2,000 บาท) ห้ามใช้อ้างอิงเป็นพยานหลักฐานในคดีแพ่ง <em>แนวทางแก้ไข:</em> เจ้าหนี้สามารถนำสัญญาไปชำระค่าอากรแสตมป์พร้อมเงินเพิ่ม/ค่าปรับต่อกรมสรรพากรให้บริบูรณ์ก่อนอ้างอิงต่อศาลได้
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: วิเคราะห์กฎหมายการอายัดเงิน -->
+        <section id="legal" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">🏛️</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">2. การวิเคราะห์กฎหมาย: การอายัดเงินได้ของครูเกษียณโดยหน่วยงานต้นสังกัด</h2>
+                    <p class="text-xs text-slate-500">ตรวจสอบอำนาจตามกฎหมาย ระเบียบกระทรวงศึกษาธิการ และความเสี่ยงตาม ป.อาญา มาตรา 157</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                ประเด็นสำคัญที่สุดที่เจ้าหนี้เรียกร้องคือ "ขอให้หน่วยงานต้นสังกัดอายัดเงินบำนาญ เงินเดือน หรือสิทธิประโยชน์จากการเกษียณ" จากการตรวจสอบข้อกฎหมายและระเบียบราชการอย่างเคร่งครัด สรุปได้ว่า <strong>หน่วยงานต้นสังกัดไม่สามารถทำการอายัดให้ได้ และหากฝืนกระทำจะผิดกฎหมายอย่างร้ายแรง</strong> ดังมีเหตุผลทางกฎหมายรองรับดังนี้
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Point 1 -->
+                <div class="p-4 bg-rose-50 border border-rose-200 rounded-lg text-xs space-y-2">
+                    <div class="font-bold text-rose-900 text-sm flex items-center space-x-2">
+                        <span>⛔</span>
+                        <span>ป.วิ.พ. มาตรา 302 (2)</span>
+                    </div>
+                    <p class="text-rose-800 leading-relaxed">
+                        บัญญัติชัดเจนว่า เงินเดือน ค่าจ้าง บำนาญ บำเหน็จ เบี้ยหวัด หรือรายได้อื่นในลักษณะเดียวกันของข้าราชการ <strong>"ไม่อยู่ในความรับผิดแห่งการบังคับคดี"</strong> แม้เจ้าหนี้จะฟ้องชนะคดี กรมบังคับคดียังอายัดไม่ได้ ต้นสังกัดจึงยิ่งไม่มีอำนาจอายัด
+                    </p>
+                </div>
+                <!-- Point 2 -->
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-xs space-y-2">
+                    <div class="font-bold text-amber-900 text-sm flex items-center space-x-2">
+                        <span>📜</span>
+                        <span>ระเบียบ ศธ. พ.ศ. 2551</span>
+                    </div>
+                    <p class="text-amber-800 leading-relaxed">
+                        การหักเงิน ณ ที่จ่าย ทำได้เฉพาะ <strong>"หนี้สวัสดิการราชการและสหกรณ์"</strong> เท่านั้น ไม่คุ้มครองหนี้ส่วนบุคคลระหว่างครูด้วยกัน และระเบียบข้อ 7 บังคับว่าต้องมีเงินคงเหลือสุทธิไม่น้อยกว่า <strong>30%</strong> เพื่อการดำรงชีพ
+                    </p>
+                </div>
+                <!-- Point 3 -->
+                <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg text-xs space-y-2">
+                    <div class="font-bold text-indigo-900 text-sm flex items-center space-x-2">
+                        <span>⚖️</span>
+                        <span>ป.อาญา มาตรา 157</span>
+                    </div>
+                    <p class="text-indigo-800 leading-relaxed">
+                        หากผู้บังคับบัญชาหรือเจ้าหน้าที่อายัดเงินบำนาญตามคำขอโดยไม่มีกฎหมายรองรับ จะถือเป็น <strong>"การปฏิบัติหน้าที่โดยมิชอบ"</strong> เสี่ยงต่อการถูกฟ้องศาลปกครองและดำเนินคดีอาญาตามแนวคำพิพากษาศาลปกครองสูงสุด
+                    </p>
+                </div>
+            </div>
+
+            <!-- Visual Chart: Asset Attachment Feasibility -->
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <div class="mb-4">
+                    <h3 class="font-bold text-indigo-900 text-sm">แผนภูมิเปรียบเทียบ: ความเป็นไปได้ทางกฎหมายในการอายัดทรัพย์สินแต่ละประเภท</h3>
+                    <p class="text-xs text-slate-500">แสดงระดับความเป็นไปได้และช่องทางทางกฎหมายในการบังคับชำระหนี้จากทรัพย์สินครูเกษียณ</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="assetAttachmentChart"></canvas>
+                </div>
+                <div class="mt-4 text-xs text-slate-600 bg-white p-3 rounded border border-slate-200">
+                    <strong>คำอธิบายบริบท:</strong> เงินบำนาญและเงินตอบแทนจากราชการได้รับความคุ้มครอง 100% ไม่สามารถอายัดได้เลย ส่วนเงินปันผลสหกรณ์ออมทรัพย์และเงินฝากธนาคารส่วนตัว สามารถอายัดได้เฉพาะในชั้นบังคับคดีหลังศาลมีคำพิพากษา โดยเจ้าพนักงานบังคับคดีเท่านั้น (ต้นสังกัดอายัดเองไม่ได้)
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ตรวจสอบอำนาจตาม พ.ร.บ. ไกล่เกลี่ย 2562 -->
+        <section id="jurisdiction" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">📜</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">3. ตรวจสอบอำนาจตาม พ.ร.บ. การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562</h2>
+                    <p class="text-xs text-slate-500">การประเมินขอบเขตอำนาจ ประเภทข้อพิพาท และผลบังคับทางกฎหมาย</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4 text-xs">
+                    <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                        <span class="font-bold text-emerald-900 text-sm block mb-1">✅ ข้อพิพาทนี้สามารถไกล่เกลี่ยได้ตามกฎหมาย</span>
+                        <p class="text-emerald-800 leading-relaxed">
+                            กรณีนี้เป็น <strong>"ข้อพิพาททางแพ่ง"</strong> เกี่ยวกับสิทธิเรียกร้องตามสัญญากู้ยืมเงินและการรับช่วงสิทธิ ซึ่งมีทุนทรัพย์ไม่เกิน 5,000,000 บาท อยู่ภายใต้ขอบเขตอำนาจตาม <strong>มาตรา 20 แห่ง พ.ร.บ. การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562</strong>
+                        </p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+                        <span class="font-bold text-indigo-900 text-sm block mb-1">🏢 หน่วยงานที่มีอำนาจดำเนินการ</span>
+                        <p class="text-indigo-800 leading-relaxed">
+                            สามารถยื่นคำร้องขอไกล่เกลี่ยได้ที่ <strong>ศูนย์ไกล่เกลี่ยข้อพิพาทภาคประชาชน</strong>, สำนักงานบังคับคดีจังหวัด, กรมคุ้มครองสิทธิและเสรีภาพ หรือศูนย์ดำรงธรรมจังหวัด/อำเภอ
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm">⚡ สภาพบังคับอันทรงพลังของ พ.ร.บ. ไกล่เกลี่ย 2562</h3>
+                    <p class="text-slate-600">
+                        ข้อดีที่สุดของการไกล่เกลี่ยตาม พ.ร.บ. ฉบับนี้ คือเมื่อคู่กรณีตกลงกันได้และจัดทำ <strong>"บันทึกข้อตกลงระงับข้อพิพาท" (มาตรา 35)</strong> สัญญานี้จะมีผลผูกพันทันที
+                    </p>
+                    <div class="p-3 bg-white rounded border border-slate-200 font-medium text-indigo-900">
+                        หากลูกหนี้ผิดนัดชำระหนี้ตามข้อตกลง เจ้าหนี้สามารถยื่นคำร้องต่อศาลเพื่อขอให้ออกคำบังคับ/หมายบังคับคดีได้ทันทีตาม <strong>มาตรา 38</strong> โดย <u>ไม่ต้องเสียเวลาและค่าใช้จ่ายในการฟ้องร้องเป็นคดีใหม่</u>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: วิเคราะห์ BATNA & ผลประโยชน์คู่กรณี -->
+        <section id="negotiation" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">🤝</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">4. การวิเคราะห์ผลประโยชน์ของคู่กรณี (Interest-Based Negotiation & BATNA/WATNA)</h2>
+                    <p class="text-xs text-slate-500">การวิเคราะห์ความต้องการที่แท้จริง ความกังวล และจุดประนีประนอมของทั้งสองฝ่าย</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                เพื่อขับเคลื่อนการเจรจาให้บรรลุผล ผู้ไกล่เกลี่ยต้องแปลงจุดยืน (Position) ของแต่ละฝ่าย ให้กลายเป็นความต้องการที่แท้จริง (Interest) และประเมินทางเลือกที่ดีที่สุดกรณีเจรจาไม่สำเร็จ (BATNA) รวมถึงทางเลือกที่แย่ที่สุด (WATNA)
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Creditor Side -->
+                <div class="bg-teal-50/50 p-5 rounded-xl border border-teal-200 text-xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-teal-200 pb-2">
+                        <span class="font-bold text-teal-900 text-sm">👤 ฝ่ายเจ้าหนี้ (เพื่อนครูผู้ค้ำประกัน)</span>
+                        <span class="px-2 py-0.5 bg-teal-100 text-teal-800 rounded text-[10px] font-semibold">ผู้รับช่วงสิทธิ</span>
+                    </div>
+                    <ul class="space-y-2 text-slate-700">
+                        <li><strong>ความต้องการแท้จริง:</strong> ได้รับเงินคืนแน่นอน มีหลักประกันความเสี่ยง ไม่ต้องแบกรับภาระค่างวดที่กู้มาปิดหนี้แทน</li>
+                        <li><strong>ความกังวลสูงสุด:</strong> ลูกหนี้เกษียณแล้วย้ายภูมิลำเนา ติดต่อไม่ได้ หรือบ่ายเบี่ยงไม่ชำระหนี้จนตนเองถูกฟ้อง</li>
+                        <li><strong>สิ่งยอมรับได้:</strong> การผ่อนชำระเป็นรายเดือนที่แน่นอน โดยหักโอนอัตโนมัติ และมีหลักประกันโอนสิทธิเงินปันผล</li>
+                        <li><strong>สิ่งยอมรับไม่ได้:</strong> การยกเลิกหนี้ หรือผ่อนชำระโดยไม่มีสัญญาและไม่มีหลักประกันใดๆ รองรับ</li>
+                        <li><strong>BATNA / WATNA:</strong> BATNA คือฟ้องศาลชนะคดี/บังคับคดีเงินปันผล | WATNA คือเสียค่าทนาย ถูกศาลยกฟ้องเพราะเอกสารไม่บริบูรณ์</li>
+                    </ul>
+                </div>
+
+                <!-- Debtor Side -->
+                <div class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-200 text-xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-indigo-200 pb-2">
+                        <span class="font-bold text-indigo-900 text-sm">👤 ฝ่ายลูกหนี้ (ครูผู้เกษียณอายุราชการ)</span>
+                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-[10px] font-semibold">ลูกหนี้ประธาน</span>
+                    </div>
+                    <ul class="space-y-2 text-slate-700">
+                        <li><strong>ความต้องการแท้จริง:</strong> มีเงินเหลือดำรงชีพหลังเกษียณ (≥30%) ไม่ถูกฟ้องร้องคดีความ ไม่ถูกยึดทรัพย์สิน</li>
+                        <li><strong>ความกังวลสูงสุด:</strong> ถูกต้นสังกัดอายัดเงินบำนาญทั้งหมด จนไม่มีเงินใช้จ่ายในชีวิตประจำวัน หรือเสียชื่อเสียง</li>
+                        <li><strong>สิ่งยอมรับได้:</strong> ยินยอมผ่อนชำระคืนในยอดที่ตนเองจ่ายไหว และยอมทำหนังสือโอนสิทธิเงินปันผลสหกรณ์</li>
+                        <li><strong>สิ่งยอมรับไม่ได้:</strong> การถูกบังคับชำระค่างวดสูงเกินกว่ากำลังบำนาญ หรือถูกอายัดเงินบำนาญ ณ ที่จ่าย</li>
+                        <li><strong>BATNA / WATNA:</strong> BATNA คือเข้าโครงการปรับโครงสร้างหนี้ครู | WATNA คือถูกฟ้องล้มละลายหรือถูกอายัดเงินฝากทั้งหมด</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visual Chart: Stakeholder Priority Alignment -->
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <div class="mb-4">
+                    <h3 class="font-bold text-indigo-900 text-sm">แผนภูมิเรดาร์: การสอดคล้องของเป้าหมายและความต้องการของคู่กรณี</h3>
+                    <p class="text-xs text-slate-500">แสดงมิติเป้าหมายที่ทั้งสองฝ่ายมีจุดร่วมตรงกัน เพื่อใช้เป็นฐานในการจัดทำข้อตกลง</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="stakeholderRadarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: เสนอแนวทางไกล่เกลี่ย 5 ทางเลือก -->
+        <section id="options" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">💡</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">5. ข้อเสนอแนวทางการไกล่เกลี่ยข้อพิพาท 5 ทางเลือก (Ranked Strategy Options)</h2>
+                    <p class="text-xs text-slate-500">จัดลำดับจาก ดีที่สุด → ดี → ปานกลาง → ควรระวัง → ไม่แนะนำ พร้อมการวิเคราะห์ความเสี่ยง</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                ผู้ไกล่เกลี่ยได้ออกแบบทางเลือกในการแก้ปัญหา 5 รูปแบบ เพื่อให้คู่กรณีร่วมกันพิจารณา โดยมุ่งเน้นทางเลือกที่ชอบด้วยกฎหมาย ปฏิบัติได้จริง และสร้างความยินยอมพร้อมใจของทั้งสองฝ่าย
+            </p>
+
+            <!-- 5 Options Cards -->
+            <div class="space-y-4 mb-8">
+                <!-- Option 1: Best -->
+                <div class="p-5 bg-emerald-50/60 border-2 border-emerald-500 rounded-xl text-xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-900 text-sm">🥇 ทางเลือกที่ 1 [ดีที่สุด]: ทำสัญญาประนีประนอม พ.ร.บ. 2562 + โอนสิทธิปันผล + ตั้งหักบัญชีอัตโนมัติ</span>
+                        <span class="px-2 py-1 bg-emerald-600 text-white rounded font-bold text-[10px]">แนะนำสูงสุด</span>
+                    </div>
+                    <p class="text-emerald-950 leading-relaxed">
+                        ทำสัญญาประนีประนอมยอมความภายใต้ พ.ร.บ.การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562 + ครูเกษียณทำหนังสือยินยอมให้ธนาคารตั้งหักบัญชีรับบำนาญอัตโนมัติรายเดือน + ทำหนังสือโอนสิทธิเรียกร้องเงินปันผลสหกรณ์ครูให้เจ้าหนี้ (ป.พ.พ. มาตรา 306) + นำสัญญากู้เดิมไปปิดอากรแสตมป์ให้บริบูรณ์
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px]">
+                        <span class="text-emerald-800">✔️ <strong>ความเป็นไปได้:</strong> สูงมาก</span>
+                        <span class="text-emerald-800">✔️ <strong>ผลดี:</strong> ผูกพันตามกฎหมาย บังคับคดีได้ทันที</span>
+                        <span class="text-emerald-800">⚠️ <strong>ความเสี่ยง:</strong> ต่ำมาก</span>
+                        <span class="text-emerald-800">⭐ <strong>คะแนน:</strong> 9.5/10</span>
+                    </div>
+                </div>
+
+                <!-- Option 2: Good -->
+                <div class="p-5 bg-teal-50/60 border border-teal-400 rounded-xl text-xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-teal-900 text-sm">🥈 ทางเลือกที่ 2 [ดี]: บูรณาการร่วมกับ "สถานีแก้หนี้ครู" กระทรวงศึกษาธิการ</span>
+                        <span class="px-2 py-1 bg-teal-600 text-white rounded font-bold text-[10px]">ทางออกยั่งยืน</span>
+                    </div>
+                    <p class="text-teal-950 leading-relaxed">
+                        ส่งเรื่องเข้าสู่สถานีแก้หนี้ครูระดับจังหวัด เพื่อรวมหนี้และปรับโครงสร้างหนี้สถาบันการเงินทั้งหมด (ออมสิน/สหกรณ์) ยืดระยะเวลาผ่อนชำระถึงอายุ 75–80 ปี ลดดอกเบี้ยลง ทำให้ยอดค่างวดรวมลดลง ครูผู้เกษียณจะมีเงินบำนาญคงเหลือเพิ่มขึ้นเกินกว่า 30% จึงมีสภาพคล่องนำมาผ่อนชำระคืนเพื่อนครูได้
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px]">
+                        <span class="text-teal-800">✔️ <strong>ความเป็นไปได้:</strong> สูง</span>
+                        <span class="text-teal-800">✔️ <strong>ผลดี:</strong> แก้ไขหนี้ทั้งระบบ คืนสภาพคล่อง</span>
+                        <span class="text-teal-800">⚠️ <strong>ความเสี่ยง:</strong> ต่ำ</span>
+                        <span class="text-teal-800">⭐ <strong>คะแนน:</strong> 8.8/10</span>
+                    </div>
+                </div>
+
+                <!-- Option 3: Moderate -->
+                <div class="p-5 bg-amber-50/60 border border-amber-300 rounded-xl text-xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-amber-900 text-sm">🥉 ทางเลือกที่ 3 [ปานกลาง]: จัดหาหลักประกันประเภทหลักทรัพย์ หรือประกันชีวิต</span>
+                        <span class="px-2 py-1 bg-amber-500 text-white rounded font-bold text-[10px]">เพิ่มความมั่นใจ</span>
+                    </div>
+                    <p class="text-amber-950 leading-relaxed">
+                        ผ่อนชำระรายเดือนตามกำลัง พร้อมให้นำหลักทรัพย์ เช่น อสังหาริมทรัพย์ (ที่ดิน/บ้าน) มาจดทะเบียนจำนอง หรือทำหนังสือเปลี่ยนแปลงผู้รับประโยชน์ในกรมธรรม์ประกันชีวิต / ประกันฌาปนกิจสงเคราะห์ (ช.พ.ค.) ให้แก่เพื่อนครูตามมูลค่าหนี้จริง
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px]">
+                        <span class="text-amber-800">✔️ <strong>ความเป็นไปได้:</strong> ปานกลาง</span>
+                        <span class="text-amber-800">✔️ <strong>ผลดี:</strong> มีหลักประกันชัดเจน</span>
+                        <span class="text-amber-800">⚠️ <strong>ความเสี่ยง:</strong> ปานกลาง (ค่าธรรมเนียมจดจำนอง)</span>
+                        <span class="text-amber-800">⭐ <strong>คะแนน:</strong> 7.2/10</span>
+                    </div>
+                </div>
+
+                <!-- Option 4: Caution -->
+                <div class="p-5 bg-slate-100 border border-slate-300 rounded-xl text-xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-slate-800 text-sm">⚠️ ทางเลือกที่ 4 [ควรระวัง]: การแฮร์คัทลดหนี้ หรือปรับสัญญาเงินกู้ใหม่ระยะยาวโดยไม่มีหลักประกัน</span>
+                        <span class="px-2 py-1 bg-slate-500 text-white rounded font-bold text-[10px]">เสี่ยงผิดนัดซ้ำ</span>
+                    </div>
+                    <p class="text-slate-700 leading-relaxed">
+                        เจ้าหนี้ยอมลดเงินต้น/ดอกเบี้ยให้บางส่วน และทำสัญญากู้ยืมเงินฉบับใหม่ขยายเวลาผ่อน แต่ไม่ได้ใช้กลไก พ.ร.บ.ไกล่เกลี่ย 2562 และไม่มีการตั้งหักบัญชีหรือโอนสิทธิเงินปันผล
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px]">
+                        <span class="text-slate-700">✔️ <strong>ความเป็นไปได้:</strong> ปานกลาง</span>
+                        <span class="text-slate-700">❌ <strong>ผลเสีย:</strong> หากผิดนัดต้องเสียเวลาฟ้องศาลใหม่</span>
+                        <span class="text-slate-700">⚠️ <strong>ความเสี่ยง:</strong> สูง</span>
+                        <span class="text-slate-700">⭐ <strong>คะแนน:</strong> 4.5/10</span>
+                    </div>
+                </div>
+
+                <!-- Option 5: Not Recommended -->
+                <div class="p-5 bg-rose-50 border border-rose-300 rounded-xl text-xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-rose-900 text-sm">🚫 ทางเลือกที่ 5 [ไม่แนะนำ]: ดึงดันอายัดเงินบำนาญ หรือฟ้องร้องดำเนินคดีทันที</span>
+                        <span class="px-2 py-1 bg-rose-600 text-white rounded font-bold text-[10px]">ผิดกฎหมาย / สูญเสีย</span>
+                    </div>
+                    <p class="text-rose-950 leading-relaxed">
+                        เจ้าหนี้กดดันให้ต้นสังกัดอายัดเงินบำนาญ ณ ที่จ่าย หรือยื่นฟ้องคดีต่อศาลทันที โดยไม่ผ่านการไกล่เกลี่ย
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px]">
+                        <span class="text-rose-800">❌ <strong>ความเป็นไปได้:</strong> ต่ำมาก (ผิดกฎหมาย)</span>
+                        <span class="text-rose-800">❌ <strong>ผลเสีย:</strong> ต้นสังกัดเสี่ยง ป.อาญา 157, เสียค่าทนาย, ไม่คุ้มค่า</span>
+                        <span class="text-rose-800">⚠️ <strong>ความเสี่ยง:</strong> สูงที่สุด</span>
+                        <span class="text-rose-800">⭐ <strong>คะแนน:</strong> 1.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Charts: Evaluation & Cashflow Impact -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart 1: Options Matrix -->
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-indigo-900 text-xs mb-1">แผนภูมิการประเมินเปรียบเทียบ 5 ทางเลือกไกล่เกลี่ย</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">เปรียบเทียบคะแนนความเหมาะสมและระดับความเสี่ยงทางกฎหมาย</p>
+                    <div class="chart-container">
+                        <canvas id="optionsEvaluationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Cash Flow Simulation -->
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-indigo-900 text-xs mb-1">แผนภูมิจำลองกระแสเงินสดครูเกษียณ (ก่อน vs หลังปรับโครงสร้างหนี้)</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">แสดงเงินคงเหลือเพื่อดำรงชีพหลังเข้าร่วมสถานีแก้หนี้ครู (ทางเลือกที่ 2)</p>
+                    <div class="chart-container">
+                        <canvas id="cashFlowSimulationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: ร่างเอกสารกฎหมาย -->
+        <section id="templates" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">📜</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">6. ร่างเอกสารกฎหมายและข้อตกลงระงับข้อพิพาท (Legal Document Templates)</h2>
+                    <p class="text-xs text-slate-500">แม่แบบเอกสารราชการและสัญญาตาม พ.ร.บ. การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562 พร้อมช่องกรอกข้อมูล</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                เพื่อให้การไกล่เกลี่ยมีผลบังคับตามกฎหมายสมบูรณ์ ผู้ไกล่เกลี่ยได้จัดทำแม่แบบเอกสารสำคัญ 3 ฉบับ ซึ่งปรับแต่งเนื้อหาให้รัดกุม คุ้มครองสิทธิของเจ้าหนี้ และไม่ละเมิดสิทธิขั้นพื้นฐานของลูกหนี้
+            </p>
+
+            <div class="space-y-6 text-xs">
+                <!-- Document 1: Settlement Agreement -->
+                <div class="border border-slate-300 rounded-lg overflow-hidden">
+                    <div class="bg-indigo-900 text-white p-3 font-bold flex justify-between items-center">
+                        <span>📄 เอกสารที่ 1: สัญญาประนีประนอมยอมความ (ตาม พ.ร.บ. การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562)</span>
+                        <span class="text-[10px] bg-indigo-700 px-2 py-0.5 rounded">แบบมาตรฐานศูนย์ไกล่เกลี่ย</span>
+                    </div>
+                    <div class="p-6 bg-slate-50 font-mono space-y-4 text-slate-800 leading-relaxed overflow-x-auto">
+                        <div class="text-center font-bold text-sm">บันทึกข้อตกลงระงับข้อพิพาท (สัญญาประนีประนอมยอมความ)</div>
+                        <div class="text-center text-xs">ทำที่ ศูนย์ไกล่เกลี่ยข้อพิพาทภาคประชาชน [ระบุชื่อศูนย์]</div>
+                        <div class="text-right">วันที่ [....] เดือน [.......................] พ.ศ. [........]</div>
+                        
+                        <p>
+                            หนังสือสัญญาฉบับนี้ทำขึ้นระหว่าง:<br>
+                            <strong>ฝ่ายที่ 1 (เจ้าหนี้):</strong> [ชื่อ-สกุล เพื่อนครู] บัตรประจำตัวประชาชนเลขที่ [........................................] อยู่บ้านเลขที่ [.................................]<br>
+                            <strong>ฝ่ายที่ 2 (ลูกหนี้):</strong> [ชื่อ-สกุล ครูผู้เกษียณ] บัตรประจำตัวประชาชนเลขที่ [........................................] อยู่บ้านเลขที่ [.................................]
+                        </p>
+
+                        <p>
+                            ทั้งสองฝ่ายตกลงทำสัญญาประนีประนอมยอมความระงับข้อพิพาทหนี้สิน โดยมีข้อความดังต่อไปนี้:<br>
+                            <strong>ข้อ 1. การรับสภาพหนี้:</strong> ฝ่ายที่ 2 ยอมรับว่าเป็นหนี้ฝ่ายที่ 1 จากการที่ฝ่ายที่ 1 ได้ชำระหนี้แทนให้แก่ธนาคารออมสิน เป็นจำนวนเงินรวมทั้งสิ้น [........................] บาท ([.......................................................])<br>
+                            <strong>ข้อ 2. กำหนดการผ่อนชำระ:</strong> ฝ่ายที่ 2 ตกลงผ่อนชำระหนี้คืนให้แก่ฝ่ายที่ 1 เป็นรายเดือน เดือนละ [....................] บาท เริ่มงวดแรกวันที่ [....] เดือน [....................] พ.ศ. [........] และงวดถัดไปภายในวันที่ [....] ของทุกเดือน จนกว่าจะครบถ้วน<br>
+                            <strong>ข้อ 3. หลักประกันและการชำระหนี้:</strong> ฝ่ายที่ 2 ยินยอมทำหนังสือสั่งโอนเงินจากบัญชีรับเงินบำนาญธนาคาร [....................] เลขที่บัญชี [........................] และทำหนังสือโอนสิทธิเรียกร้องเงินปันผลสหกรณ์ออมทรัพย์ครู [....................] ให้แก่ฝ่ายที่ 1<br>
+                            <strong>ข้อ 4. ผลของการผิดนัด:</strong> หากฝ่ายที่ 2 ผิดนัดชำระหนี้งวดใดงวดหนึ่ง ให้ถือว่าหนี้ที่เหลือทั้งหมดถึงกำหนดชำระทันที และฝ่ายที่ 1 มีสิทธินำสัญญานี้ไปยื่นคำร้องต่อศาลเพื่อให้ออกคำบังคับตามมาตรา 38 แห่ง พ.ร.บ.การไกล่เกลี่ยข้อพิพาท พ.ศ. 2562 โดยทันที
+                        </p>
+
+                        <div class="pt-4 grid grid-cols-2 gap-4 text-center">
+                            <div>ลงชื่อ...................................................ฝ่ายที่ 1<br>(...................................................)</div>
+                            <div>ลงชื่อ...................................................ฝ่ายที่ 2<br>(...................................................)</div>
+                            <div>ลงชื่อ...................................................ผู้ไกล่เกลี่ย<br>(...................................................)</div>
+                            <div>ลงชื่อ...................................................พยาน<br>(...................................................)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document 2: Assignment of Claim -->
+                <div class="border border-slate-300 rounded-lg overflow-hidden">
+                    <div class="bg-teal-800 text-white p-3 font-bold flex justify-between items-center">
+                        <span>📄 เอกสารที่ 2: หนังสือโอนสิทธิเรียกร้อง (เงินปันผล/เงินเฉลี่ยคืน สหกรณ์ออมทรัพย์ครู)</span>
+                        <span class="text-[10px] bg-teal-600 px-2 py-0.5 rounded">ตาม ป.พ.พ. มาตรา 306</span>
+                    </div>
+                    <div class="p-6 bg-slate-50 font-mono space-y-4 text-slate-800 leading-relaxed overflow-x-auto">
+                        <div class="text-center font-bold text-sm">หนังสือโอนสิทธิเรียกร้อง</div>
+                        <div class="text-right">ทำที่ [...................................................]<br>วันที่ [....] เดือน [.......................] พ.ศ. [........]</div>
+                        
+                        <p>
+                            ข้าพเจ้า [ชื่อ-สกุล ครูผู้เกษียณ] สมาชิกสหกรณ์ออมทรัพย์ครู [....................] จำกัด เลขทะเบียนสมาชิก [............] ขอทำหนังสือฉบับนี้ไว้ให้แก่ [ชื่อ-สกุล เพื่อนครู] เพื่อเป็นหลักฐานว่า:<br>
+                            ข้าพเจ้าตกลงโอนสิทธิเรียกร้องในการรับเงินปันผล เงินเฉลี่ยคืน และสิทธิประโยชน์ทางการเงินประจำปีที่ข้าพเจ้ามีสิทธิได้รับจาก สหกรณ์ออมทรัพย์ครู [....................] จำกัด ให้แก่ [ชื่อ-สกุล เพื่อนครู] เป็นจำนวนเงินงวดละ [....................] บาท หรือตามจำนวนเงินปันผลที่ได้รับจริงในแต่ละปี เพื่อนำไปชำระหนี้ตามสัญญาประนีประนอมยอมความ ฉบับลงวันที่ [..../..../........]<br>
+                            ข้าพเจ้าขอให้สัญญาว่าจะไม่เพิกถอนการโอนสิทธินี้จนกว่าจะชำระหนี้ให้แก่ผู้รับโอนครบถ้วน และยินยอมทำหนังสือแจ้งการโอนสิทธินี้ให้แก่ สหกรณ์ออมทรัพย์ครู [....................] จำกัด รับทราบต่อไป
+                        </p>
+
+                        <div class="pt-4 grid grid-cols-2 gap-4 text-center">
+                            <div>ลงชื่อ...................................................ผู้โอนสิทธิ<br>(...................................................)</div>
+                            <div>ลงชื่อ...................................................ผู้รับโอนสิทธิ<br>(...................................................)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document 3: Bank Direct Debit Consent -->
+                <div class="border border-slate-300 rounded-lg overflow-hidden">
+                    <div class="bg-indigo-800 text-white p-3 font-bold flex justify-between items-center">
+                        <span>📄 เอกสารที่ 3: หนังสือยินยอมให้โอนเงินอัตโนมัติจากบัญชีเงินฝากรับบำนาญ</span>
+                        <span class="text-[10px] bg-indigo-600 px-2 py-0.5 rounded">ชำระหนี้สมัครใจ</span>
+                    </div>
+                    <div class="p-6 bg-slate-50 font-mono space-y-3 text-slate-800 leading-relaxed overflow-x-auto">
+                        <div class="text-center font-bold text-sm">หนังสือยินยอมให้หักโอนเงินจากบัญชีธนาคาร</div>
+                        <p>
+                            ข้าพเจ้า [ชื่อ-สกุล ครูผู้เกษียณ] ยินยอมให้ ธนาคาร [....................] สาขา [....................] ดำเนินการโอนเงินอัตโนมัติรายเดือนจากบัญชีเงินฝากออมทรัพย์ เลขที่บัญชี [........................] ซึ่งเป็นบัญชีรับเงินบำนาญ เข้าบัญชีเงินฝาก เลขที่บัญชี [........................] ของ [ชื่อ-สกุล เพื่อนครู] เป็นจำนวนเงิน [....................] บาท ทุกวันที่ [....] ของเดือน จนกว่าจะได้รับแจ้งยกเลิกจากเจ้าหนี้
+                        </p>
+                        <div class="pt-2 text-center">
+                            ลงชื่อ...................................................ผู้ยินยอม (ลูกหนี้)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7 & 8: การตรวจความสมบูรณ์ ความเสี่ยง & สรุป -->
+        <section id="risk-summary" class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-200">
+            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-200">
+                <span class="text-2xl p-2 bg-indigo-50 rounded-lg text-indigo-700">🛡️</span>
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-900">7. การประเมินความเสี่ยง และตารางสรุปท้าย (Risk Matrix & Master Summary)</h2>
+                    <p class="text-xs text-slate-500">ตรวจสอบความสมบูรณ์ของเอกสาร จัดระดับความเสี่ยง และตารางสรุปแผนการดำเนินงาน</p>
+                </div>
+            </div>
+
+            <!-- Legal Integrity Checklist -->
+            <div class="mb-8 bg-slate-50 p-5 rounded-xl border border-slate-200 text-xs space-y-3">
+                <h3 class="font-bold text-slate-800 text-sm">📋 ตรวจสอบความสมบูรณ์ของกระบวนการและเอกสาร (Legal Integrity Checklist)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="flex items-center space-x-2 text-emerald-800 bg-white p-2.5 rounded border border-slate-200">
+                        <span>✅</span>
+                        <span>คู่กรณีทำสัญญาด้วยความสมัครใจ ไม่ถูกข่มขู่หรือหลอกลวง</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-emerald-800 bg-white p-2.5 rounded border border-slate-200">
+                        <span>✅</span>
+                        <span>เนื้อหาไม่ขัดต่อความสงบเรียบร้อยหรือศีลธรรมอันดี (ป.พ.พ. 150)</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-emerald-800 bg-white p-2.5 rounded border border-slate-200">
+                        <span>✅</span>
+                        <span>การหักชำระหนี้เหลือเงินคงเหลือเพื่อการดำรงชีพ ≥ 30%</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-emerald-800 bg-white p-2.5 rounded border border-slate-200">
+                        <span>✅</span>
+                        <span>สัญญากู้เดิมได้รับการติดอากรแสตมป์บริบูรณ์แล้ว</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Rating Matrix -->
+            <div class="mb-8 space-y-3">
+                <h3 class="font-bold text-indigo-900 text-sm">⭐ การประเมินระดับความเสี่ยง (Risk Rating Matrix)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-lg space-y-1">
+                        <div class="font-bold text-emerald-900 flex justify-between">
+                            <span>ความเสี่ยงการผิดนัด</span>
+                            <span class="text-amber-500">★★☆☆☆</span>
+                        </div>
+                        <p class="text-emerald-800 text-[11px]"><strong>ระดับต่ำ (2/5):</strong> เมื่อใช้ระบบตั้งโอนเงินอัตโนมัติร่วมกับโอนสิทธิเงินปันผล</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-lg space-y-1">
+                        <div class="font-bold text-emerald-900 flex justify-between">
+                            <span>ความเสี่ยงถูกฟ้องร้อง</span>
+                            <span class="text-amber-500">★☆☆☆☆</span>
+                        </div>
+                        <p class="text-emerald-800 text-[11px]"><strong>ระดับต่ำมาก (1/5):</strong> เนื่องจากทำสัญญาไกล่เกลี่ยตาม พ.ร.บ. 2562 มีคำบังคับรองรับ</p>
+                    </div>
+                    <div class="p-4 bg-rose-50 border border-rose-200 rounded-lg space-y-1">
+                        <div class="font-bold text-rose-900 flex justify-between">
+                            <span>เสี่ยงต้นสังกัดผิดกฎหมาย</span>
+                            <span class="text-rose-600 font-bold">★★★★★</span>
+                        </div>
+                        <p class="text-rose-800 text-[11px]"><strong>ระดับสูงสุด (5/5) หากอายัดบำนาญ:</strong> หากต้นสังกัดอายัดบำนาญจะผิด ป.อาญา 157 ทันที</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Master Summary Table -->
+            <div class="space-y-3">
+                <h3 class="font-bold text-indigo-900 text-sm">📊 ตารางสรุปภาพรวมการไกล่เกลี่ยข้อพิพาท (Master Summary Matrix)</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-indigo-900 text-white">
+                                <th class="p-3 border border-indigo-800">ประเด็นข้อพิพาท</th>
+                                <th class="p-3 border border-indigo-800">หลักกฎหมายที่เกี่ยวข้อง</th>
+                                <th class="p-3 border border-indigo-800">สิทธิและข้อจำกัด</th>
+                                <th class="p-3 border border-indigo-800">ทางออก/เอกสารที่ต้องใช้</th>
+                                <th class="p-3 border border-indigo-800">ขั้นตอนต่อไป</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-slate-50">
+                            <tr>
+                                <td class="p-3 border border-slate-200 font-semibold text-indigo-900">1. สัญญากู้เดิมขาดพยาน & ไม่ติดอากร</td>
+                                <td class="p-3 border border-slate-200">ป.พ.พ. ม. 653<br>ป.รัษฎากร ม. 118</td>
+                                <td class="p-3 border border-slate-200 text-emerald-700">สัญญาไม่เป็นโมฆะ ลายเซ็นผู้กู้ผูกพันตามกฎหมาย</td>
+                                <td class="p-3 border border-slate-200">นำสัญญาไปชำระอากรแสตมป์ + ค่าปรับที่กรมสรรพากร</td>
+                                <td class="p-3 border border-slate-200">ดำเนินการชำระอากรให้บริบูรณ์ทันที</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border border-slate-200 font-semibold text-indigo-900">2. ขออายัดเงินบำนาญ/เงินเดือน</td>
+                                <td class="p-3 border border-slate-200">ป.วิ.พ. ม. 302 (2)<br>ระเบียบ ศธ. 2551<br>ป.อาญา ม. 157</td>
+                                <td class="p-3 border border-slate-200 text-rose-700">ไม่อยู่ในความรับผิดแห่งการบังคับคดี ห้ามต้นสังกัดอายัดเด็ดขาด</td>
+                                <td class="p-3 border border-slate-200">เปลี่ยนเป็นหนังสือยินยอมโอนเงินจากบัญชีบำนาญสมัครใจ</td>
+                                <td class="p-3 border border-slate-200">แจ้งข้อกฎหมายให้เจ้าหนี้เข้าใจและยกเลิกคำขออายัด</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border border-slate-200 font-semibold text-indigo-900">3. การจัดทำข้อตกลงชำระหนี้</td>
+                                <td class="p-3 border border-slate-200">พ.ร.บ. ไกล่เกลี่ย 2562 ม. 20, 35, 38<br>ป.พ.พ. ม. 306</td>
+                                <td class="p-3 border border-slate-200 text-emerald-700">มีผลผูกพันทางกฎหมาย บังคับคดีได้ทันทีโดยไม่ต้องฟ้องใหม่</td>
+                                <td class="p-3 border border-slate-200">1. สัญญาประนีประนอม<br>2. หนังสือโอนสิทธิปันผล<br>3. หนังสือหักบัญชี</td>
+                                <td class="p-3 border border-slate-200">นัดคู่กรณีลงนาม ณ ศูนย์ไกล่เกลี่ยข้อพิพาท</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-indigo-950 text-slate-400 py-8 border-t border-indigo-900 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-semibold text-slate-300">ศูนย์ไกล่เกลี่ยข้อพิพาท ตามพระราชบัญญัติการไกล่เกลี่ยข้อพิพาท พ.ศ. 2562</p>
+            <p>รายงานฉบับนี้จัดทำขึ้นเพื่อวัตถุประสงค์ในการวิเคราะห์ข้อกฎหมายและเสนอแนวทางไกล่เกลี่ยข้อพิพาทด้วยความเป็นกลาง สุจริต และสมัครใจ</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Core Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // Utility Function for Chart Label Wrapping (>16 chars logic)
+            function wrapLabel(label) {
+                if (typeof label !== 'string') return label;
+                if (label.length <= 16) return label;
+                
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > 16) {
+                        if (currentLine) lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                if (currentLine) lines.push(currentLine.trim());
+                return lines;
+            }
+
+            // Shared Tooltip Configuration
+            const sharedTooltipConfig = {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            };
+
+            // Chart 1: Asset Attachment Feasibility Bar Chart
+            const ctx1 = document.getElementById('assetAttachmentChart').getContext('2d');
+            const rawLabels1 = [
+                'เงินเดือน / เงินตอบแทนราชการ',
+                'เงินบำนาญ / บำเหน็จตกทอด',
+                'เงินปันผล / เฉลี่ยคืน สหกรณ์',
+                'เงินทุนเรือนหุ้น สหกรณ์ออมทรัพย์',
+                'เงินฝากในบัญชี ธนาคารส่วนตัว'
+            ];
+            
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: rawLabels1.map(wrapLabel),
+                    datasets: [
+                        {
+                            label: 'ระดับอำนาจต้นสังกัดในการอายัด (0% = ทำไม่ได้)',
+                            data: [0, 0, 0, 0, 0],
+                            backgroundColor: '#E11D48',
+                        },
+                        {
+                            label: 'ระดับความเป็นไปได้ในการอายัด โดยเจ้าพนักงานบังคับคดี (หลังมีคำพิพากษา)',
+                            data: [0, 0, 80, 40, 100],
+                            backgroundColor: '#0D9488',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + '%'; }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: sharedTooltipConfig,
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'K2D', size: 11 } } }
+                    }
+                }
+            });
+
+            // Chart 2: Stakeholder Priority Radar Chart
+            const ctx2 = document.getElementById('stakeholderRadarChart').getContext('2d');
+            const rawLabels2 = [
+                'ชำระหนี้ครบถ้วน แน่นอน',
+                'ความคุ้มครอง ตามกฎหมาย',
+                'การมีเงินใช้ ดำรงชีพ',
+                'ความรวดเร็ว ไม่ต้องฟ้องศาล',
+                'ความถูกต้อง ไม่ผิด ม.157'
+            ];
+
+            new Chart(ctx2, {
+                type: 'radar',
+                data: {
+                    labels: rawLabels2.map(wrapLabel),
+                    datasets: [
+                        {
+                            label: 'ฝ่ายเจ้าหนี้ (เพื่อนครู)',
+                            data: [100, 90, 40, 95, 60],
+                            borderColor: '#0D9488',
+                            backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                            pointBackgroundColor: '#0D9488'
+                        },
+                        {
+                            label: 'ฝ่ายลูกหนี้ (ครูเกษียณ)',
+                            data: [60, 85, 100, 90, 70],
+                            borderColor: '#4338CA',
+                            backgroundColor: 'rgba(67, 56, 202, 0.2)',
+                            pointBackgroundColor: '#4338CA'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#E2E8F0' },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        tooltip: sharedTooltipConfig,
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'K2D', size: 11 } } }
+                    }
+                }
+            });
+
+            // Chart 3: Options Evaluation Chart
+            const ctx3 = document.getElementById('optionsEvaluationChart').getContext('2d');
+            const rawLabels3 = [
+                'ทางเลือก 1: ไกล่เกลี่ย พ.ร.บ.+โอนปันผล',
+                'ทางเลือก 2: เข้าสถานีแก้หนี้ครู',
+                'ทางเลือก 3: ใช้หลักทรัพย์จำนอง',
+                'ทางเลือก 4: ทำสัญญากู้ใหม่ทั่วไป',
+                'ทางเลือก 5: อายัดบำนาญ/ฟ้องศาล'
+            ];
+
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: rawLabels3.map(wrapLabel),
+                    datasets: [
+                        {
+                            label: 'คะแนนความเหมาะสม (เต็ม 10)',
+                            data: [9.5, 8.8, 7.2, 4.5, 1.0],
+                            backgroundColor: ['#059669', '#0D9488', '#D97706', '#64748B', '#E11D48']
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 10 }
+                    },
+                    plugins: {
+                        tooltip: sharedTooltipConfig,
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Chart 4: Cash Flow Simulation Chart
+            const ctx4 = document.getElementById('cashFlowSimulationChart').getContext('2d');
+            const rawLabels4 = [
+                'ก่อนปรับโครงสร้าง (ค่างวดเดิมสูง)',
+                'หลังปรับโครงสร้าง (สถานีแก้หนี้ครู)'
+            ];
+
+            new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: rawLabels4.map(wrapLabel),
+                    datasets: [
+                        {
+                            label: 'ค่างวดหนี้สถาบันการเงิน (ออมสิน/สหกรณ์)',
+                            data: [22000, 11000],
+                            backgroundColor: '#64748B'
+                        },
+                        {
+                            label: 'ค่างวดผ่อนชำระคืนเพื่อนครู (เจ้าหนี้)',
+                            data: [0, 5000],
+                            backgroundColor: '#0D9488'
+                        },
+                        {
+                            label: 'เงินบำนาญคงเหลือเพื่อดำรงชีพ (≥30%)',
+                            data: [8000, 14000],
+                            backgroundColor: '#059669'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return value.toLocaleString() + ' บ.'; }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: sharedTooltipConfig,
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'K2D', size: 10 } } }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
